@@ -2,8 +2,13 @@
 using namespace std;
 int fx[] = {+0,+0,+1,-1,-1,+1,-1,+1}; /// move up down && corner /// If we want only move in up and down , thne 
 int fy[] = {-1,+1,+0,+0,+1,+1,-1,-1}; /// UVA problem samle (Oil deposite )
-int row , col;
-char maze[101][101];
+int row , col; 
+/*
+
+
+int fx[]={+1,-1,+0,+0};
+int fy[]={+0,+0,+1,-1};
+*/char maze[101][101];
 int r[101][101];
 void dfs (int x, int y)
 {
