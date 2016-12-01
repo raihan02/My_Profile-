@@ -4,8 +4,7 @@ int fx[] = {+0,+0,+1,-1,-1,+1,-1,+1}; /// move up down && corner /// If we want 
 int fy[] = {-1,+1,+0,+0,+1,+1,-1,-1}; /// UVA problem samle (Oil deposite )
 int row , col; 
 /*
-
-
+for up down right left
 int fx[]={+1,-1,+0,+0};
 int fy[]={+0,+0,+1,-1};
 */char maze[101][101];
