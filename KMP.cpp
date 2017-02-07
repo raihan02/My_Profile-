@@ -1,3 +1,8 @@
+/// KMP 
+/// Time complexity O(N + M)
+/// Coded By Raihan Chowdhury 
+/// Department of CSE , IIUC 
+/// Team IIUC_(GR)^2 
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
