@@ -1,3 +1,8 @@
+/*
+Write a recursive program to remove all odd integers from an array.
+You must not use any extra array or print anything in the function. 
+Just read input, call the recursive function, then print the array in main().
+*/
 #include <bits/stdc++.h>
 using namespace std;
 int arr[100] ={0};
@@ -28,3 +33,6 @@ int main()
 
 
 }
+/*
+
+*/
