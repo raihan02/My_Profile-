@@ -1,0 +1,20 @@
+/*
+Write a recursive solution to evaluate the previous polynomial for any given x and n.
+Like, when x=2 and n=5, we have 1 + x + x2 + ................. + xn-1 = 31
+*/
+#include <bits/stdc++.h>
+using namespace std;
+int solve (int i , int n, int x)
+{
+
+  if(i < n){
+    return (int)pow(x, i) + solve(i + 1, n, x);
+  }
+    return 0;
+
+}
+int main()
+{
+   int x = solve(0,5,2);
+   cout<<x<< endl;
+}
