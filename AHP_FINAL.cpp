@@ -132,10 +132,91 @@ void display(int n)
     {
         for(int j = 0; j < n; j++)
         {
-            cout<<setw(10)<< mat[i][j] << " ";
+            // cout<<setw(10)<< mat[i][j] << " ";
         }
-        cout<< endl;
+        //cout<< endl;
     }
+
+    double arr[100][100] = {0};
+
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            arr[j][i] = vt[i] * mat[j][i];
+        }
+    }
+
+    for(int i = 1; i <= 20; i++)
+        printf("-");
+    printf("\n");
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            //cout<<setw(10)<< arr[i][j] << " ";
+        }
+        //cout<< endl;
+    }
+    vector <double> ws,wa;
+
+    for(int i = 0; i < n; i++)
+    {
+        double sum = 0.00;
+        for(int j = 0; j < n; j++)
+        {
+            sum += arr[i][j];
+        }
+        ws.push_back(sum);
+    }
+
+    for(int i = 0; i < ws.size(); i++)
+    {
+        // cout<< ws[i] << endl;
+        wa.push_back(ws[i]/vt[i]);
+    }
+
+    //printf("___________\n");
+    double sum = 0.0;
+    for(int i = 0; i < wa.size(); i++)
+    {
+        //cout<< wa[i] << endl;
+        //wa.push_back(vt[i]/wa[i]);
+        sum += wa[i];
+    }
+    double lemda = sum/ n;
+
+
+
+    double a,b,c,d, CI;
+    a = lemda - n;
+
+    CI =  a/(n-1);
+
+
+    double CR = CI / RI[n-1];
+    cout<<"Lemda Max = " <<  lemda << endl;
+    cout<<"CI = " << CI << endl;
+    cout<<"CR = " << CR << endl;
+    cout<<"Priority Vector " << endl;
+    printf("----------------\n");
+    for(int i = 0; i < vt.size(); i++)
+    {
+        cout<< vt[i] << endl;
+    }
+    if(CR > 0.1)
+        cout<<"Try Again" << endl;
+    else
+    {
+        cout<<"Accepted" << endl;
+        cout<< endl;
+
+    }
+    wa.clear();
+    ws.clear();
+
+
+
 }
 
 void lemda_max (int n)
@@ -187,7 +268,7 @@ void ff(int x)
 }
 void checking (int n)
 {
-    if(CR < 1.0)
+    if(CR < 0.1)
     {
         printf("Accepted\n");
     }
@@ -223,9 +304,10 @@ int main()
     lemda_max(n);
     consistaency_ration(n);
 
-    checking(n);
+    //checking(n);
+    display(n);
     int x = 1;
-
+    //check(n);
     ff(x);
     for(int i = 0; i < n; i++)
     {
@@ -242,9 +324,25 @@ int main()
         A_vector(p);
         lemda_max(p);
         consistaency_ration(p);
-        checking(p);
+        // checking(p);
+        display(p);
         ff(x + 1);
+
     }
 
 
 }
+/*
+4
+a
+b
+c
+d
+5
+4
+7
+0.5
+3
+3
+
+*/
