@@ -26,3 +26,5 @@ public:
         return res;
     }
 };
+
+// Blog : http://www.shafaetsplanet.com/?p=2316
