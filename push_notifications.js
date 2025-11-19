@@ -20,14 +20,19 @@ exports.checkVideoStatus = onRequest(
 
     let apiUrl = "";
     let headers = {
-      Authorization: "Bearer user:1252-xTa1L7hMZFVoQs3SPGi4" // ✅ wrapped in quotes
+      Authorization: "Bearer user:1252-xTa1L7hMZFVoQs3SPGi4"
     };
 
+    // -----------------------
+    // 1️⃣ Select API URL
+    // -----------------------
     if (type === "pixverse") {
       apiUrl = `https://api.useapi.net/v2/pixverse/videos/${video_id}`;
     } else if (type === "hailuo") {
       apiUrl = `https://api.useapi.net/v1/minimax/videos/${video_id}`;
-    } else {
+    } else if (type === "veo") { // ⭐ VEO Logic Start
+      apiUrl = `https://api.useapi.net/v1/google-flow/jobs/${video_id}`;
+    } else { // ⭐ Invalid type for any other type
       return res.status(400).send({ error: "Invalid type" });
     }
 
@@ -37,14 +42,33 @@ exports.checkVideoStatus = onRequest(
 
       let isCompleted = false;
 
+      // -----------------------
+      // 2️⃣ COMPLETION LOGIC
+      // -----------------------
       if (type === "pixverse") {
         isCompleted = data.video_status_name === "COMPLETED" && data.video_status_final === true;
       } else if (type === "hailuo") {
         isCompleted = data.statusLabel === "completed" && data.statusFinal === true;
+      } else if (type === "veo") { // ⭐ VEO Completion Logic Added
+        const jobStatus = data.status; 
+        const operations = data.response?.operations ?? [];
+        const firstOp = operations[0];
+
+        const opStatus = firstOp?.status; 
+        const videoMeta = firstOp?.operation?.metadata?.video;
+        const fifeUrl = videoMeta?.fifeUrl;
+        
+        // VEO-এর জন্য কমপ্লিশন চেক (ভিডিও URL অনুপস্থিত থাকলেও এখানে isCompleted true হবে)
+        isCompleted =
+          jobStatus === "completed" &&
+          opStatus === "MEDIA_GENERATION_STATUS_SUCCESSFUL"; // URL চেক বাদ দেওয়া হলো
       }
 
-      console.log(`🔁 Attempt #${attempt} | Type: ${type} | Completed: ${isCompleted}`); // ✅ backtick fixed
+      console.log(`🔁 Attempt #${attempt} | Type: ${type} | Completed: ${isCompleted}`); 
 
+      // ----------------------------------------------------
+      // 3️⃣ If COMPLETED → Send Push Notification
+      // ----------------------------------------------------
       if (isCompleted) {
         const msg = {
           token: fcm_token,
